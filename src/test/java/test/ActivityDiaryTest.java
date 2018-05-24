@@ -5,10 +5,12 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -17,9 +19,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  * @author andreendo
  */
 public class ActivityDiaryTest {
-    
+
     //Apk file within the project
-    private static String APKFILELOCATION = "./res/de.rampro.activitydiary_122.apk";
+    private static String APKFILELOCATION = "./res/app.apk";
     protected AndroidDriver d;
 
     @Before
@@ -32,6 +34,10 @@ public class ActivityDiaryTest {
         capabilities.setCapability(MobileCapabilityType.APP, apkFile.getAbsolutePath());
 
         d = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+
+        d.findElement(By.id("android:id/button1")).click();
+
+        d.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @After
@@ -41,16 +47,19 @@ public class ActivityDiaryTest {
         }
     }
 
+    
+
     @Test
-    public void test01() {
-        d.findElementByAccessibilityId("Add Activity").click();
-        
-        d.findElement(By.id("de.rampro.activitydiary:id/edit_activity_name"))
-                .sendKeys("atividade 1");
-        
-        d.findElementByAccessibilityId("Save").click();
+    public void adicionarPessoaTest() {
+        d.findElementByAccessibilityId("Add traveler to trip").click();
+        d.findElement(By.xpath("//android.widget.TextView[@content-desc=\"Add traveler to trip\"]")).click();
+        d.findElement(By.id("Add traveler to trip")).click();
         
         
-        assertEquals("atividade 1", d.findElement(By.id("de.rampro.activitydiary:id/activity_name")).getText()); 
+        d.findElement(By.id("de.koelle.christian.trickytripper:id/option_accept")).sendKeys("Lucas");
+        
+        assertEquals("Lucas", d.findElementById("android:id/text1").toString());
+
     }
+
 }
