@@ -27,9 +27,18 @@ public class ActivityDiaryTest {
         File apkFile = new File(APKFILELOCATION);
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Nexus4-22");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-        capabilities.setCapability(MobileCapabilityType.APP, apkFile.getAbsolutePath());
+        capabilities
+                .setCapability(
+                        MobileCapabilityType.DEVICE_NAME, 
+                        "Nexus_4_API_25");
+        capabilities
+                .setCapability(
+                        MobileCapabilityType.PLATFORM_NAME, 
+                        "Android");
+        capabilities
+                .setCapability(
+                        MobileCapabilityType.APP, 
+                        apkFile.getAbsolutePath());
 
         d = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }
